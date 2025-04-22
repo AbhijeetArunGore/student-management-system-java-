@@ -6,13 +6,21 @@ public class DBHelper {
 
     public DBHelper() {
         try {
+            // Load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
+    
+            // Now create the connection
             conn = DriverManager.getConnection("jdbc:sqlite:students.db");
+    
             Statement stmt = conn.createStatement();
             stmt.execute("CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, name TEXT, course TEXT, marks INTEGER)");
-        } catch (SQLException e) {
+            
+            System.out.println("✅ Database connected successfully!");
+        } catch (Exception e) {
             System.out.println("DB Error: " + e.getMessage());
         }
     }
+    
 
     public void insert(Student s) {
         try {
